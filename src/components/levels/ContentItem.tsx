@@ -4,13 +4,17 @@ const ContentItem = (info: any) => {
   const ctx = useContext(currentLevelContext);
   const closeModal = () => {
     ctx?.setIconId("");
+    ctx?.getSelectedItem(null);
   };
   return (
     <>
       <div
         className={`content__item ${
-          ctx?.iconId ? "content__item--current" : ""
-        } `}
+          ctx?.iconId === info.info.spaces ? "content__item--current" : ""
+        }
+          ${ctx?.searchLink && "content__item--current"}
+          ${ctx?.itemSelected?.level ? "content__item--current" : ""}
+        `}
         data-space={`${info.info.spaces}`}
         data-category={`${info?.info.category}`}
       >
@@ -44,7 +48,7 @@ const ContentItem = (info: any) => {
           </p>
         </div>
       </div>
-      {ctx?.iconId && (
+      {(ctx?.iconId || ctx?.itemSelected?.level) && (
         <button
           className="boxbutton boxbutton--dark content__button"
           aria-label="Close details"

@@ -8,12 +8,6 @@ const Header = () => {
             Miller
           </a>
         </li>
-        <li>
-          <a href="index2.html">Bixler</a>
-        </li>
-        <li>
-          <a href="index3.html">Olin</a>
-        </li>
       </ul>
     </header>
   );

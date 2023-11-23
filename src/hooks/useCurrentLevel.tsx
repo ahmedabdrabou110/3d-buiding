@@ -3,15 +3,22 @@ import { createContext, useState } from "react";
 interface LevelCurrentProps {
   currentLevel: boolean;
   getCurrentLevel: (id: string) => void;
-  getId: (id: string) => void;
   id: string;
   getIconId: (id: string) => void;
   iconId: string;
-  setId: (id: string) => void;
   setIconId: (id: string) => void;
-  nextLevel: (id: string) => void;
-  hiddenBtn: boolean;
   setIdItem: (id: string) => void;
+  getSelectedItem: (id: any) => void;
+  openModal: () => void;
+  closeModal: () => void;
+  open: boolean;
+  activeLinkSearch: () => void;
+  searchLink: boolean;
+  itemSelected: any;
+  setSearchItem: (id: string) => void;
+  search: string;
+  prevWindow: (id: string) => void;
+  nextWindow: (id: string) => void;
 }
 
 export const currentLevelContext = createContext<LevelCurrentProps | null>(
@@ -20,8 +27,11 @@ export const currentLevelContext = createContext<LevelCurrentProps | null>(
 
 const CurrentLevelProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentLevel, setCurrentLevel] = useState<boolean>(false);
-  const [hiddenBtn, setHiddenBtn] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [searchLink, setSearchLink] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
   const [id, setId] = useState<string>("");
+  const [itemSelected, setItemSelected] = useState<any>();
   const [iconId, setIconId] = useState<string>("");
 
   const getCurrentLevel = (id: string) => {
@@ -31,15 +41,33 @@ const CurrentLevelProvider = ({ children }: { children: React.ReactNode }) => {
       setCurrentLevel(false);
     }
   };
-  const nextLevel = (id: string) => {
-    if (Number(id) === 7) return;
-    setId(String(Number(id) + 1));
+
+  const openModal = () => {
+    setOpen(true);
+  };
+  const closeModal = () => {
+    setOpen(false);
+  };
+
+  const prevWindow = (id: string) => {
+    setIdItem(String(Number(id) - 1));
+  };
+  const nextWindow = (id: string) => {
     setIdItem(String(Number(id) + 1));
   };
 
-  const getId = () => {
-    return Number(id);
+  const setSearchItem = (item: string) => {
+    setSearch(item);
   };
+
+  const getSelectedItem = (item: any) => {
+    setItemSelected(item);
+  };
+
+  const activeLinkSearch = () => {
+    setSearchLink(true);
+  };
+
   const setIdItem = (id: string) => {
     setId(id);
   };
@@ -49,15 +77,22 @@ const CurrentLevelProvider = ({ children }: { children: React.ReactNode }) => {
   const value: LevelCurrentProps = {
     currentLevel,
     getCurrentLevel,
-    getId,
     id,
     getIconId,
     iconId,
-    setId,
     setIconId,
-    nextLevel,
-    hiddenBtn,
+    openModal,
+    closeModal,
     setIdItem,
+    open,
+    activeLinkSearch,
+    searchLink,
+    getSelectedItem,
+    itemSelected,
+    nextWindow,
+    search,
+    prevWindow,
+    setSearchItem,
   };
   return (
     <currentLevelContext.Provider value={value}>

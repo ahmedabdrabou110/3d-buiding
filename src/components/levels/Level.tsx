@@ -1,26 +1,26 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { currentLevelContext } from "../../hooks/useCurrentLevel";
 import LevelPin from "./LevelPin";
 
 const Level = (room: any) => {
-  const [itemId, setItemId] = useState("");
+  let level = room.room.id;
   const ctx = useContext(currentLevelContext);
   const getActiveLevel = () => {
-    ctx?.getCurrentLevel(room.room.level);
-    ctx?.setIdItem(room.room.id);
+    ctx?.setIdItem(level);
   };
 
-  const getId = () => {
-    setItemId(room.room?.level);
-  };
-  
   return (
     <>
       <div
         className={`level  level--${room.room.level}
-        ${ctx?.id === itemId ? `current-level` : ""}  aria-label=Level ${
-          room.room.level
-        }`}
+        ${ctx?.id === level ? "level--current" : ""}
+        ${
+          String(Number(ctx?.itemSelected?.level)) === level
+            ? "level--current"
+            : ""
+        }
+        aria-label=Level ${room.room.level}
+        `}
         onClick={getActiveLevel}
       >
         <svg
@@ -1490,7 +1490,9 @@ const Level = (room: any) => {
         <div
           className={`level__pins ${
             room.room.level === ctx?.id ? "level__pins--active" : ""
-          }`}
+          }
+          ${ctx?.itemSelected?.level === ctx?.id ? "level__pins--active" : ""}
+          `}
         >
           {room.room.data.map((pin: any) => (
             <LevelPin key={pin.spaces} pin={pin} />

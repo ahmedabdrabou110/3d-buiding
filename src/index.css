@@ -430,6 +430,7 @@ button:focus {
   transform: translateZ(15vmin) rotate3d(0, 0, 1, 20deg)
 }
 
+
 .level {
   position: relative;
   width: 100%;
@@ -1101,6 +1102,11 @@ button:focus {
   opacity: 1;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0)
+}
+
+.pin:nth-child(1) .pin__icon {
+  -webkit-transition-delay: .8s;
+  transition-delay: .8s
 }
 
 .pin:nth-child(2) .pin__icon {
