@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { currentLevelContext } from "../../hooks/useCurrentLevel";
 import RommsData from "../../utils/rooms";
 import ContentItem from "./ContentItem";
